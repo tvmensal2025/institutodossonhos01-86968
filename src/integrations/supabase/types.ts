@@ -3058,6 +3058,39 @@ export type Database = {
           },
         ]
       }
+      health_conditions: {
+        Row: {
+          color_code: string | null
+          created_at: string | null
+          description: string | null
+          icon_name: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          color_code?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          color_code?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       health_diary: {
         Row: {
           created_at: string
@@ -5444,6 +5477,67 @@ export type Database = {
         }
         Relationships: []
       }
+      protocol_supplements: {
+        Row: {
+          created_at: string | null
+          display_order: number | null
+          dosage: string
+          id: string
+          is_active: boolean | null
+          notes: string | null
+          protocol_id: string
+          supplement_id: string
+          updated_at: string | null
+          usage_time_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          display_order?: number | null
+          dosage: string
+          id?: string
+          is_active?: boolean | null
+          notes?: string | null
+          protocol_id: string
+          supplement_id: string
+          updated_at?: string | null
+          usage_time_id: string
+        }
+        Update: {
+          created_at?: string | null
+          display_order?: number | null
+          dosage?: string
+          id?: string
+          is_active?: boolean | null
+          notes?: string | null
+          protocol_id?: string
+          supplement_id?: string
+          updated_at?: string | null
+          usage_time_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "protocol_supplements_protocol_id_fkey"
+            columns: ["protocol_id"]
+            isOneToOne: false
+            referencedRelation: "supplement_protocols"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "protocol_supplements_supplement_id_fkey"
+            columns: ["supplement_id"]
+            isOneToOne: false
+            referencedRelation: "supplements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "protocol_supplements_usage_time_id_fkey"
+            columns: ["usage_time_id"]
+            isOneToOne: false
+            referencedRelation: "usage_times"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       protocolos_nutricionais: {
         Row: {
           alimentos_evitar: string[] | null
@@ -7044,6 +7138,50 @@ export type Database = {
           },
         ]
       }
+      supplement_protocols: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          duration_days: number | null
+          health_condition_id: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          notes: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          duration_days?: number | null
+          health_condition_id?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          notes?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          duration_days?: number | null
+          health_condition_id?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          notes?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplement_protocols_health_condition_id_fkey"
+            columns: ["health_condition_id"]
+            isOneToOne: false
+            referencedRelation: "health_conditions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       supplements: {
         Row: {
           active_ingredients: string[] | null
@@ -7054,14 +7192,17 @@ export type Database = {
           created_at: string | null
           description: string | null
           discount_price: number | null
+          external_id: string | null
           id: string
           image_url: string | null
           is_approved: boolean | null
           name: string
           original_price: number | null
           recommended_dosage: string | null
+          scientific_studies: string[] | null
           score: number | null
           stock_quantity: number | null
+          tags: string[] | null
           updated_at: string | null
         }
         Insert: {
@@ -7073,14 +7214,17 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           discount_price?: number | null
+          external_id?: string | null
           id?: string
           image_url?: string | null
           is_approved?: boolean | null
           name: string
           original_price?: number | null
           recommended_dosage?: string | null
+          scientific_studies?: string[] | null
           score?: number | null
           stock_quantity?: number | null
+          tags?: string[] | null
           updated_at?: string | null
         }
         Update: {
@@ -7092,14 +7236,17 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           discount_price?: number | null
+          external_id?: string | null
           id?: string
           image_url?: string | null
           is_approved?: boolean | null
           name?: string
           original_price?: number | null
           recommended_dosage?: string | null
+          scientific_studies?: string[] | null
           score?: number | null
           stock_quantity?: number | null
+          tags?: string[] | null
           updated_at?: string | null
         }
         Relationships: []
@@ -7407,6 +7554,33 @@ export type Database = {
           source?: string
           updated_at?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      usage_times: {
+        Row: {
+          code: string
+          created_at: string | null
+          display_order: number | null
+          id: string
+          name: string
+          time_of_day: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          name: string
+          time_of_day?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          name?: string
+          time_of_day?: string | null
         }
         Relationships: []
       }
@@ -10021,7 +10195,9 @@ export type Database = {
       is_admin_user:
         | { Args: { _uid?: string }; Returns: boolean }
         | { Args: never; Returns: boolean }
+      is_rafael_or_admin: { Args: never; Returns: boolean }
       is_super_admin: { Args: { _user_id?: string }; Returns: boolean }
+      is_super_admin_by_email: { Args: never; Returns: boolean }
       join_challenge: {
         Args: { challenge_uuid: string; user_uuid: string }
         Returns: Json
