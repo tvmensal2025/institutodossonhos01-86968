@@ -75,84 +75,102 @@ export default function RankingCommunity({ user }: RankingCommunityProps) {
   }
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      {/* Cover Section - Facebook Style */}
-      <div className="relative h-64 bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20 border-b">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgwLDAsMCwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div>
-        <div className="container mx-auto px-4 h-full flex items-end pb-8">
-          <div className="flex items-center gap-4">
-            <div className="w-32 h-32 rounded-full bg-card border-4 border-background shadow-xl flex items-center justify-center">
-              <Users className="w-16 h-16 text-primary" />
+    <div className="min-h-screen bg-gradient-to-b from-muted/30 to-background">
+      {/* Cover Section - Enhanced Facebook Style */}
+      <div className="relative h-80 bg-gradient-to-br from-emerald-100 via-teal-50 to-cyan-100 dark:from-emerald-950/40 dark:via-teal-950/20 dark:to-cyan-950/30 border-b shadow-lg overflow-hidden">
+        {/* Decorative Background Pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIgZmlsbD0icmdiYSgwLDAsMCwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30"></div>
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 h-full flex items-end pb-8 relative z-10">
+          <div className="flex items-center gap-6">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+              <div className="relative w-40 h-40 rounded-full bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border-4 border-white dark:border-gray-700 shadow-2xl flex items-center justify-center">
+                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                  <Users className="w-20 h-20 text-white" />
+                </div>
+              </div>
             </div>
-            <div className="text-foreground drop-shadow-lg">
-              <h1 className="text-4xl font-bold mb-2">Comunidade HealthFeed</h1>
-              <p className="text-lg text-muted-foreground">{ranking.length} membros ativos</p>
+            <div>
+              <h1 className="text-5xl font-bold mb-3 bg-gradient-to-r from-emerald-700 to-teal-700 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
+                Comunidade HealthFeed
+              </h1>
+              <p className="text-xl text-gray-700 dark:text-gray-300 font-medium flex items-center gap-2">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-400">
+                  <Users className="w-4 h-4" />
+                </span>
+                {ranking.length} membros ativos
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content Area - Facebook Layout */}
-      <div className="container mx-auto px-4 -mt-4 pb-8">
+      <div className="container mx-auto px-4 -mt-6 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Sidebar - Community Info */}
           <div className="lg:col-span-4 space-y-4">
             {/* About Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Sobre esta comunidade</CardTitle>
+            <Card className="shadow-lg border-emerald-100 dark:border-emerald-900/30 overflow-hidden">
+              <CardHeader className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/20 dark:to-teal-950/20">
+                <CardTitle className="text-lg font-bold">Sobre esta comunidade</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">
+              <CardContent className="space-y-4 pt-6">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   Conecte-se com outros membros, compartilhe suas conquistas e inspire a comunidade!
                 </p>
                 
-                <Separator />
+                <Separator className="my-4" />
                 
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Users className="w-5 h-5 text-primary" />
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/20 dark:to-teal-950/20 hover:from-emerald-100 hover:to-teal-100 dark:hover:from-emerald-950/30 dark:hover:to-teal-950/30 transition-all">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md">
+                      <Users className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold">{ranking.length}</div>
-                      <div className="text-xs text-muted-foreground">Membros ativos</div>
+                      <div className="font-bold text-lg text-emerald-700 dark:text-emerald-400">{ranking.length}</div>
+                      <div className="text-xs text-muted-foreground font-medium">Membros ativos</div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
-                      <Target className="w-5 h-5 text-green-600" />
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 hover:from-green-100 hover:to-emerald-100 dark:hover:from-green-950/30 dark:hover:to-emerald-950/30 transition-all">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-md">
+                      <Target className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold">
+                      <div className="font-bold text-lg text-green-700 dark:text-green-400">
                         {ranking.reduce((sum, user) => sum + user.missions_completed, 0)}
                       </div>
-                      <div className="text-xs text-muted-foreground">Missões completadas</div>
+                      <div className="text-xs text-muted-foreground font-medium">Missões completadas</div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center">
-                      <Star className="w-5 h-5 text-yellow-600" />
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-950/20 dark:to-amber-950/20 hover:from-yellow-100 hover:to-amber-100 dark:hover:from-yellow-950/30 dark:hover:to-amber-950/30 transition-all">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center shadow-md">
+                      <Star className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold">
+                      <div className="font-bold text-lg text-yellow-700 dark:text-yellow-400">
                         {ranking.reduce((sum, user) => sum + user.total_points, 0).toLocaleString()}
                       </div>
-                      <div className="text-xs text-muted-foreground">Pontos acumulados</div>
+                      <div className="text-xs text-muted-foreground font-medium">Pontos acumulados</div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center">
-                      <Flame className="w-5 h-5 text-orange-600" />
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/20 hover:from-orange-100 hover:to-red-100 dark:hover:from-orange-950/30 dark:hover:to-red-950/30 transition-all">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-md">
+                      <Flame className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold">
+                      <div className="font-bold text-lg text-orange-700 dark:text-orange-400">
                         {Math.max(...ranking.map(user => user.streak_days), 0)}
                       </div>
-                      <div className="text-xs text-muted-foreground">Maior sequência (dias)</div>
+                      <div className="text-xs text-muted-foreground font-medium">Maior sequência (dias)</div>
                     </div>
                   </div>
                 </div>
@@ -161,44 +179,52 @@ export default function RankingCommunity({ user }: RankingCommunityProps) {
 
             {/* Your Position Card */}
             {currentUserRank && (
-              <Card className="bg-primary/5 border-primary/20">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-primary" />
+              <Card className="shadow-xl border-2 border-emerald-200 dark:border-emerald-800 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-950/30 dark:via-teal-950/20 dark:to-cyan-950/20 overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-400/20 to-teal-500/20 rounded-full blur-3xl -z-0"></div>
+                <CardHeader className="relative z-10">
+                  <CardTitle className="text-lg font-bold flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                      <TrendingUp className="w-5 h-5 text-white" />
+                    </div>
                     Sua Posição
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 relative z-10">
                   <div className="flex items-center gap-4">
-                    <Avatar className="h-16 w-16 border-2 border-primary">
-                      <AvatarImage src={currentUserRank.avatar_url} alt={currentUserRank.user_name} />
-                      <AvatarFallback className="bg-primary text-primary-foreground font-bold text-xl">
-                        {currentUserRank.user_name.charAt(0).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full blur-md opacity-50"></div>
+                      <Avatar className="relative h-20 w-20 border-4 border-white dark:border-gray-800 shadow-xl ring-2 ring-emerald-500/30">
+                        <AvatarImage src={currentUserRank.avatar_url} alt={currentUserRank.user_name} />
+                        <AvatarFallback className="bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-bold text-2xl">
+                          {currentUserRank.user_name.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </div>
                     <div className="flex-1">
-                      <div className="font-semibold text-lg">{currentUserRank.user_name}</div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        {getPositionIcon(currentUserRank.position)}
-                        <span className="font-bold text-primary">#{currentUserRank.position}</span>
+                      <div className="font-bold text-xl text-emerald-900 dark:text-emerald-100">{currentUserRank.user_name}</div>
+                      <div className="flex items-center gap-2 text-sm mt-1">
+                        <div className="flex items-center gap-1 px-2 py-1 bg-white dark:bg-gray-800 rounded-full shadow-sm">
+                          {getPositionIcon(currentUserRank.position)}
+                          <span className="font-bold text-emerald-700 dark:text-emerald-400">#{currentUserRank.position}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                   
-                  <Separator />
+                  <Separator className="my-4" />
                   
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <div className="text-lg font-bold text-primary">{currentUserRank.total_points.toLocaleString()}</div>
-                      <div className="text-xs text-muted-foreground">Pontos</div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="text-center p-3 bg-white dark:bg-gray-800/50 rounded-xl shadow-sm">
+                      <div className="text-xl font-bold text-emerald-700 dark:text-emerald-400">{currentUserRank.total_points.toLocaleString()}</div>
+                      <div className="text-xs text-muted-foreground font-medium">Pontos</div>
                     </div>
-                    <div>
-                      <div className="text-lg font-bold text-green-600">{currentUserRank.missions_completed}</div>
-                      <div className="text-xs text-muted-foreground">Missões</div>
+                    <div className="text-center p-3 bg-white dark:bg-gray-800/50 rounded-xl shadow-sm">
+                      <div className="text-xl font-bold text-green-700 dark:text-green-400">{currentUserRank.missions_completed}</div>
+                      <div className="text-xs text-muted-foreground font-medium">Missões</div>
                     </div>
-                    <div>
-                      <div className="text-lg font-bold text-orange-600">{currentUserRank.streak_days}</div>
-                      <div className="text-xs text-muted-foreground">Sequência</div>
+                    <div className="text-center p-3 bg-white dark:bg-gray-800/50 rounded-xl shadow-sm">
+                      <div className="text-xl font-bold text-orange-700 dark:text-orange-400">{currentUserRank.streak_days}</div>
+                      <div className="text-xs text-muted-foreground font-medium">Sequência</div>
                     </div>
                   </div>
                 </CardContent>
@@ -206,51 +232,68 @@ export default function RankingCommunity({ user }: RankingCommunityProps) {
             )}
 
             {/* Top Achievements */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Award className="w-5 h-5" />
+            <Card className="shadow-lg border-amber-100 dark:border-amber-900/30 overflow-hidden">
+              <CardHeader className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/20 dark:to-yellow-950/20">
+                <CardTitle className="text-lg font-bold flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center">
+                    <Award className="w-5 h-5 text-white" />
+                  </div>
                   Destaques
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg">
-                  <Crown className="w-8 h-8 text-yellow-600" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium text-yellow-700 dark:text-yellow-400 mb-1">🏆 Líder</div>
-                    <div className="font-semibold truncate">{ranking[0]?.user_name || '-'}</div>
-                    <div className="text-xs text-muted-foreground">{ranking[0]?.total_points.toLocaleString() || 0} pts</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg">
-                  <Flame className="w-8 h-8 text-orange-600" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium text-orange-700 dark:text-orange-400 mb-1">🔥 Sequência</div>
-                    <div className="font-semibold truncate">
-                      {ranking.reduce((max, user) => 
-                        user.streak_days > max.streak_days ? user : max, 
-                        { user_name: '-', streak_days: 0 }
-                      ).user_name}
+              <CardContent className="space-y-2 pt-4">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-amber-200 dark:from-yellow-900/30 dark:to-amber-900/30 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="relative flex items-center gap-3 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-950/20 dark:to-amber-950/20 rounded-xl border border-yellow-200 dark:border-yellow-900/30 shadow-sm hover:shadow-md transition-all">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center shadow-lg">
+                      <Crown className="w-8 h-8 text-white" />
                     </div>
-                    <div className="text-xs text-muted-foreground">
-                      {Math.max(...ranking.map(user => user.streak_days), 0)} dias
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-bold text-yellow-700 dark:text-yellow-400 mb-1">🏆 LÍDER ABSOLUTO</div>
+                      <div className="font-bold text-base truncate text-yellow-900 dark:text-yellow-100">{ranking[0]?.user_name || '-'}</div>
+                      <div className="text-xs text-yellow-700 dark:text-yellow-400 font-medium">{ranking[0]?.total_points.toLocaleString() || 0} pontos</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-950/20 rounded-lg">
-                  <Zap className="w-8 h-8 text-green-600" />
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium text-green-700 dark:text-green-400 mb-1">⚡ Mais Ativo</div>
-                    <div className="font-semibold truncate">
-                      {ranking.reduce((max, user) => 
-                        user.missions_completed > max.missions_completed ? user : max, 
-                        { user_name: '-', missions_completed: 0 }
-                      ).user_name}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-200 to-red-200 dark:from-orange-900/30 dark:to-red-900/30 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="relative flex items-center gap-3 p-4 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/20 rounded-xl border border-orange-200 dark:border-orange-900/30 shadow-sm hover:shadow-md transition-all">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center shadow-lg">
+                      <Flame className="w-8 h-8 text-white" />
                     </div>
-                    <div className="text-xs text-muted-foreground">
-                      {Math.max(...ranking.map(user => user.missions_completed), 0)} missões
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-bold text-orange-700 dark:text-orange-400 mb-1">🔥 MAIOR SEQUÊNCIA</div>
+                      <div className="font-bold text-base truncate text-orange-900 dark:text-orange-100">
+                        {ranking.reduce((max, user) => 
+                          user.streak_days > max.streak_days ? user : max, 
+                          { user_name: '-', streak_days: 0 }
+                        ).user_name}
+                      </div>
+                      <div className="text-xs text-orange-700 dark:text-orange-400 font-medium">
+                        {Math.max(...ranking.map(user => user.streak_days), 0)} dias consecutivos
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-200 to-emerald-200 dark:from-green-900/30 dark:to-emerald-900/30 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="relative flex items-center gap-3 p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 rounded-xl border border-green-200 dark:border-green-900/30 shadow-sm hover:shadow-md transition-all">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg">
+                      <Zap className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-bold text-green-700 dark:text-green-400 mb-1">⚡ MAIS ATIVO</div>
+                      <div className="font-bold text-base truncate text-green-900 dark:text-green-100">
+                        {ranking.reduce((max, user) => 
+                          user.missions_completed > max.missions_completed ? user : max, 
+                          { user_name: '-', missions_completed: 0 }
+                        ).user_name}
+                      </div>
+                      <div className="text-xs text-green-700 dark:text-green-400 font-medium">
+                        {Math.max(...ranking.map(user => user.missions_completed), 0)} missões completadas
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -261,17 +304,17 @@ export default function RankingCommunity({ user }: RankingCommunityProps) {
           {/* Main Feed Area */}
           <div className="lg:col-span-8 space-y-4">
             {/* Search and Filters */}
-            <Card>
+            <Card className="shadow-md border-emerald-100 dark:border-emerald-900/30">
               <CardContent className="p-4">
                 <div className="flex flex-col sm:flex-row gap-3">
                   <div className="flex-1">
                     <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-600 dark:text-emerald-400 w-5 h-5" />
                       <Input
                         placeholder="Buscar membros..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-10"
+                        className="pl-11 h-12 border-emerald-200 dark:border-emerald-800 focus:ring-emerald-500 focus:border-emerald-500"
                       />
                     </div>
                   </div>
@@ -279,13 +322,19 @@ export default function RankingCommunity({ user }: RankingCommunityProps) {
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
-                      size="sm"
+                      size="default"
                       onClick={() => setShowTop(showTop === 10 ? 50 : 10)}
+                      className="border-emerald-200 dark:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 font-medium"
                     >
                       {showTop === 10 ? 'Ver mais' : 'Ver menos'}
                     </Button>
                     
-                    <Button variant="outline" size="sm" onClick={refetch}>
+                    <Button 
+                      variant="default"
+                      size="default" 
+                      onClick={refetch}
+                      className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 shadow-md"
+                    >
                       <Activity className="w-4 h-4 mr-2" />
                       Atualizar
                     </Button>
@@ -295,13 +344,15 @@ export default function RankingCommunity({ user }: RankingCommunityProps) {
             </Card>
 
             {/* Ranking Feed */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Trophy className="w-5 h-5 text-primary" />
+            <Card className="shadow-lg overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-950/20 dark:via-teal-950/20 dark:to-cyan-950/20 border-b">
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md">
+                    <Trophy className="w-6 h-6 text-white" />
+                  </div>
                   Ranking da Comunidade
                 </CardTitle>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-muted-foreground mt-1 font-medium">
                   Top {showTop} membros mais engajados
                 </p>
               </CardHeader>
