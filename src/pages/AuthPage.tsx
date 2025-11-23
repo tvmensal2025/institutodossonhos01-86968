@@ -838,7 +838,6 @@ const AuthPage = () => {
                         <div className="space-y-2">
                           <Label htmlFor="signup-gender" className="text-sm font-medium">Gênero *</Label>
                           <Select value={signupData.gender} onValueChange={value => {
-                          console.log('Gender selected:', value);
                           setSignupData({
                             ...signupData,
                             gender: value
@@ -847,7 +846,7 @@ const AuthPage = () => {
                             <SelectTrigger id="signup-gender" className="h-12 bg-background/50 border-border/50 focus:border-primary focus:ring-primary/20">
                               <SelectValue placeholder="Selecione seu gênero" />
                             </SelectTrigger>
-                            <SelectContent position="popper" sideOffset={4}>
+                            <SelectContent className="bg-background z-[100]">
                               <SelectItem value="masculino">Masculino</SelectItem>
                               <SelectItem value="feminino">Feminino</SelectItem>
                               <SelectItem value="outro">Outro</SelectItem>
