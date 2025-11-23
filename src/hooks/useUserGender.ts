@@ -9,11 +9,17 @@ export const useUserGender = (user: User | null) => {
   useEffect(() => {
     if (user) {
       loadUserGender();
+    } else {
+      setLoading(false);
+      setGender(null);
     }
   }, [user]);
 
   const loadUserGender = async () => {
-    if (!user) return;
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
     try {
       setLoading(true);
