@@ -7,13 +7,13 @@ export const useUserGender = (user: User | null) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user) {
+    if (user?.id) {
       loadUserGender();
     } else {
       setLoading(false);
       setGender(null);
     }
-  }, [user]);
+  }, [user?.id]);
 
   const loadUserGender = async () => {
     if (!user) {
