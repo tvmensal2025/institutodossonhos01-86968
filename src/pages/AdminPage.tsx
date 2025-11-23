@@ -37,6 +37,7 @@ import {
 import { AdminDashboard } from "@/components/admin/AdminDashboard";
 import UserManagement from "@/components/admin/UserManagement";
 import WeighingMonitoring from "@/components/admin/WeighingMonitoring";
+import AnamnesisManagement from "@/components/admin/AnamnesisManagement";
 import { WeightReportGenerator } from "@/components/admin/WeightReportGenerator";
 import AdvancedReports from "@/components/admin/AdvancedReports";
 import { CourseManagementNew } from "@/components/admin/CourseManagementNew";
@@ -47,6 +48,7 @@ import ChallengeManagement from "@/components/admin/ChallengeManagement";
 import { N8nWebhookManager } from "@/components/N8nWebhookManager";
 import AIControlPanelUnified from "@/components/admin/AIControlPanelUnified";
 import CompanyConfiguration from "@/components/admin/CompanyConfiguration";
+import { ProductManagement } from "@/components/admin/ProductManagement";
 import { ExerciseManagement } from "@/components/admin/ExerciseManagement";
 
 import SystemStatus from "@/components/admin/SystemStatus";
@@ -158,6 +160,7 @@ const AdminPage = () => {
     { id: 'dashboard', icon: BarChart3, label: 'Dashboard Admin', color: 'text-primary', description: 'Visão geral completa do sistema' },
     { id: 'users', icon: Users, label: 'Gestão de Usuários', color: 'text-blue-500', description: 'Gerenciar todos os usuários' },
     { id: 'weighings', icon: Scale, label: 'Monitoramento de Pesagens', color: 'text-purple-500', description: 'Acompanhar todas as pesagens' },
+    { id: 'anamneses', icon: FileText, label: 'Gestão de Anamneses', color: 'text-indigo-500', description: 'Visualizar todas as anamneses para entender como ajudar cada usuário' },
     { id: 'reports', icon: TrendingUp, label: 'Análises e Relatórios', color: 'text-green-500', description: 'Relatórios avançados e insights' },
     { id: 'courses', icon: BookOpen, label: 'Gestão de Cursos', color: 'text-orange-500', description: 'Gerenciar cursos e conteúdo' },
     { id: 'exercises', icon: Dumbbell, label: 'Gestão de Exercícios', color: 'text-cyan-600', description: 'Gerenciar biblioteca de exercícios com vídeos' },
@@ -196,7 +199,19 @@ const AdminPage = () => {
     return null; // Will redirect to auth
   }
 
-  // Acesso liberado para todos os usuários logados
+  // Acesso liberado APENAS para rafael.ids@icloud.com
+  const ALLOWED_ADMIN_EMAIL = "rafael.ids@icloud.com";
+  
+  if (user.email !== ALLOWED_ADMIN_EMAIL) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4 text-center">
+        <Shield className="h-16 w-16 text-red-500 mb-4" />
+        <h1 className="text-2xl font-bold mb-2">Acesso Negado</h1>
+        <p className="text-muted-foreground mb-4">Apenas o superadministrador tem permissão para acessar esta área.</p>
+        <Button onClick={() => navigate("/")}>Voltar para o Início</Button>
+      </div>
+    );
+  }
 
   const userName = user.user_metadata?.full_name || user.email?.split("@")[0] || "Administrador";
 
@@ -208,6 +223,8 @@ const AdminPage = () => {
         return <UserManagement />;
       case 'weighings':
         return <WeighingMonitoring />;
+      case 'anamneses':
+        return <AnamnesisManagement />;
       case 'reports':
         return <AdvancedReports />;
       case 'courses':
@@ -1122,22 +1139,9 @@ const AdminPage = () => {
                   Gerenciar suplementos e produtos disponíveis para os usuários
                 </p>
               </div>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                Adicionar Produto
-              </Button>
             </div>
             
-            <Card>
-              <CardHeader>
-                <CardTitle>Produtos Cadastrados</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Sistema de gestão de produtos em desenvolvimento.
-                </p>
-              </CardContent>
-            </Card>
+            <ProductManagement />
           </div>
         );
       default:

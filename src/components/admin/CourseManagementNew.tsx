@@ -385,16 +385,34 @@ export const CourseManagementNew = () => {
 
   // Verificar se é super admin
   const checkSuperAdmin = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return false;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return false;
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role, admin_level')
-      .eq('user_id', user.id)
-      .single();
+      // Verifica email diretamente (Super Admin hardcoded)
+      if (user.email === 'rafael.ids@icloud.com') {
+        return true;
+      }
 
-    console.log('Admin check for lesson creation disabled');
+      // Verifica perfil de admin
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role, admin_level, email')
+        .eq('user_id', user.id)
+        .single();
+
+      if (profile) {
+        // Verifica se é admin ou super admin
+        if (profile.role === 'admin' || profile.admin_level === 'super' || profile.email === 'rafael.ids@icloud.com') {
+          return true;
+        }
+      }
+
+      return false;
+    } catch (error) {
+      console.error('Erro ao verificar super admin:', error);
+      return false;
+    }
   };
 
   // Handlers de edição
@@ -431,7 +449,10 @@ export const CourseManagementNew = () => {
         .delete()
         .eq('id', courseId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Erro do Supabase:', error);
+        throw new Error(error.message || `Erro ${error.code}: ${error.details || 'Não foi possível excluir'}`);
+      }
 
       toast({
         title: "Curso Excluído ✅",
@@ -440,11 +461,12 @@ export const CourseManagementNew = () => {
 
       fetchCourses();
       fetchStats();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao excluir curso:', error);
+      const errorMessage = error?.message || error?.error_description || 'Erro desconhecido';
       toast({
-        title: "Erro",
-        description: "Não foi possível excluir o curso",
+        title: "Erro ao Excluir",
+        description: errorMessage || "Não foi possível excluir o curso. Verifique as permissões.",
         variant: "destructive"
       });
     }
@@ -467,7 +489,10 @@ export const CourseManagementNew = () => {
         .delete()
         .eq('id', moduleId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Erro do Supabase:', error);
+        throw new Error(error.message || `Erro ${error.code}: ${error.details || 'Não foi possível excluir'}`);
+      }
 
       toast({
         title: "Módulo Excluído ✅",
@@ -478,11 +503,12 @@ export const CourseManagementNew = () => {
         fetchModules(selectedCourse.id);
       }
       fetchStats();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao excluir módulo:', error);
+      const errorMessage = error?.message || error?.error_description || 'Erro desconhecido';
       toast({
-        title: "Erro",
-        description: "Não foi possível excluir o módulo",
+        title: "Erro ao Excluir",
+        description: errorMessage || "Não foi possível excluir o módulo. Verifique as permissões.",
         variant: "destructive"
       });
     }
@@ -505,7 +531,10 @@ export const CourseManagementNew = () => {
         .delete()
         .eq('id', lessonId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Erro do Supabase:', error);
+        throw new Error(error.message || `Erro ${error.code}: ${error.details || 'Não foi possível excluir'}`);
+      }
 
       toast({
         title: "Aula Excluída ✅",
@@ -516,11 +545,12 @@ export const CourseManagementNew = () => {
         fetchLessons(selectedModule.id);
       }
       fetchStats();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao excluir aula:', error);
+      const errorMessage = error?.message || error?.error_description || 'Erro desconhecido';
       toast({
-        title: "Erro",
-        description: "Não foi possível excluir a aula",
+        title: "Erro ao Excluir",
+        description: errorMessage || "Não foi possível excluir a aula. Verifique as permissões.",
         variant: "destructive"
       });
     }

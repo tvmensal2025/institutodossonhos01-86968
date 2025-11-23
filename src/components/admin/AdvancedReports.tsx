@@ -92,11 +92,7 @@ const AdvancedReports: React.FC = () => {
       // Buscar perfis para nomes
       const { data: profiles } = await supabase
         .from('profiles')
-        .select('id, full_name, created_at');
-
-      const { data: userProfiles } = await supabase
-        .from('profiles')
-        .select('id, full_name, created_at');
+        .select('user_id, full_name, created_at');
 
       // Buscar missões completadas
       const { data: missions } = await supabase
@@ -238,7 +234,7 @@ const AdvancedReports: React.FC = () => {
         const weekActiveUsers = new Set(weekMeasurements.map(m => m.user_id)).size;
 
         // Novos usuários da semana (baseado em perfis)
-        const newUsers = [...(profiles || []), ...(userProfiles || [])]
+        const newUsers = (profiles || [])
           .filter(p => {
             const date = new Date(p.created_at);
             return date >= weekStart && date <= weekEnd;
@@ -280,8 +276,7 @@ const AdvancedReports: React.FC = () => {
 
       const topUsers = Array.from(userStats.entries())
         .map(([userId, stats]) => {
-          const userProfile = profiles?.find(p => p.id === userId) || 
-                            userProfiles?.find(p => p.id === userId);
+          const userProfile = profiles?.find(p => p.user_id === userId);
           
           return {
             user_id: userId,

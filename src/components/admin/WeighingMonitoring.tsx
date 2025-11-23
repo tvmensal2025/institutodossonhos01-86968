@@ -31,6 +31,7 @@ interface MeasurementData {
   device_type: string;
   status: 'normal' | 'warning' | 'critical';
   weightChange?: number;
+  user_name?: string;
 }
 
 const WeighingMonitoring: React.FC = () => {
@@ -50,22 +51,44 @@ const WeighingMonitoring: React.FC = () => {
     try {
       setLoading(true);
 
-      const { data, error } = await supabase
+      // Buscar medições
+      const { data: measurementsData, error: measurementsError } = await supabase
         .from('weight_measurements')
         .select('*')
         .order('measurement_date', { ascending: false })
         .limit(100);
 
-      if (error) {
-        console.error('Error fetching measurements:', error);
+      if (measurementsError) {
+        console.error('Error fetching measurements:', measurementsError);
         return;
       }
+
+      // Buscar IDs únicos de usuários
+      const userIds = [...new Set((measurementsData || []).map(m => m.user_id))];
+      
+      // Buscar nomes dos usuários
+      const { data: profilesData, error: profilesError } = await supabase
+        .from('profiles')
+        .select('user_id, full_name')
+        .in('user_id', userIds);
+
+      if (profilesError) {
+        console.error('Error fetching profiles:', profilesError);
+      }
+
+      // Criar mapa de user_id -> full_name
+      const userNamesMap = new Map<string, string>();
+      (profilesData || []).forEach(profile => {
+        if (profile.user_id && profile.full_name) {
+          userNamesMap.set(profile.user_id, profile.full_name);
+        }
+      });
 
       // Processar dados e calcular variações de peso
       const processedData: MeasurementData[] = [];
       const userLastWeights = new Map<string, number>();
 
-      (data || []).forEach((measurement, index) => {
+      (measurementsData || []).forEach((measurement, index) => {
         let status: 'normal' | 'warning' | 'critical' = 'normal';
         let weightChange: number | undefined;
         
@@ -85,7 +108,8 @@ const WeighingMonitoring: React.FC = () => {
         processedData.push({
           ...measurement,
           status,
-          weightChange
+          weightChange,
+          user_name: userNamesMap.get(measurement.user_id) || 'Usuário sem nome'
         });
       });
 
@@ -99,7 +123,9 @@ const WeighingMonitoring: React.FC = () => {
   };
 
   const filteredMeasurements = measurements.filter(measurement => {
-    const matchesSearch = measurement.user_id.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = searchTerm === '' || 
+      measurement.user_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (measurement.user_name && measurement.user_name.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesFilter = filterStatus === 'all' || measurement.status === filterStatus;
     return matchesSearch && matchesFilter;
   });
@@ -252,9 +278,15 @@ const WeighingMonitoring: React.FC = () => {
                     <Scale className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">
+                    <div className="flex items-center gap-2 mb-1">
+                      <User className="h-4 w-4 text-muted-foreground" />
+                      <h3 className="font-semibold text-lg">
+                        {measurement.user_name || 'Usuário sem nome'}
+                      </h3>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-2">
                       Pesagem #{measurement.id.slice(0, 8)}...
-                    </h3>
+                    </p>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
                         <Activity className="h-4 w-4" />

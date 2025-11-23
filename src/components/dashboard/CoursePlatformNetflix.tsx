@@ -20,6 +20,7 @@ import {
 import { useAdminMode } from "@/hooks/useAdminMode";
 import { AdminEditControls, AdminStatsPanel, AdminViewToggle } from "@/components/admin/AdminEditControls";
 import { supabase } from "@/integrations/supabase/client";
+import { getVideoEmbedUrl, detectVideoProvider } from "@/utils/videoUrlParser";
 
 interface Lesson {
   id: string;
@@ -279,26 +280,6 @@ const CoursePlatformNetflix = ({ user }: CoursePlatformNetflixProps) => {
   const handleLessonClick = (lesson: Lesson) => {
     setSelectedLesson(lesson);
     setCurrentView('player');
-  };
-  const getVideoEmbedUrl = (raw?: string) => {
-    const fallback = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
-    if (!raw) return fallback;
-    try {
-      // Handle YouTube watch and short links
-      if (raw.includes('youtube.com/watch')) {
-        const u = new URL(raw);
-        const v = u.searchParams.get('v');
-        if (v) return `https://www.youtube.com/embed/${v}?autoplay=1`;
-      }
-      if (raw.includes('youtu.be/')) {
-        const id = raw.split('youtu.be/')[1]?.split(/[?&#]/)[0];
-        if (id) return `https://www.youtube.com/embed/${id}?autoplay=1`;
-      }
-      // If already embed or other providers, return as-is
-      return raw;
-    } catch {
-      return fallback;
-    }
   };
 
   const handleBackToHome = () => {
@@ -709,16 +690,48 @@ const CoursePlatformNetflix = ({ user }: CoursePlatformNetflixProps) => {
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
             {/* Player principal - Responsivo */}
             <div className="flex-1">
-              <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-900 shadow-2xl">
-                <iframe
-                  src={getVideoEmbedUrl(selectedLesson.video_url)}
-                  className="w-full h-full border-0"
-                  title={selectedLesson.title}
-                  loading="lazy"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share"
-                />
-              </div>
+              {(() => {
+                const videoUrl = selectedLesson.video_url;
+                const provider = detectVideoProvider(videoUrl);
+                const embedUrl = getVideoEmbedUrl(videoUrl);
+                const isOneDrive = provider.type === 'onedrive';
+                
+                // Para OneDrive, mostra iframe e também botão alternativo
+                return (
+                  <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-900 shadow-2xl">
+                    <iframe
+                      src={embedUrl}
+                      className="w-full h-full border-0"
+                      title={selectedLesson.title}
+                      loading="lazy"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share"
+                      onError={() => {
+                        console.error('Erro ao carregar vídeo embed');
+                      }}
+                    />
+                    {isOneDrive && (
+                      <div className="absolute bottom-4 right-4">
+                        <Button
+                          asChild
+                          variant="secondary"
+                          size="sm"
+                          className="bg-white/90 hover:bg-white text-black"
+                        >
+                          <a
+                            href={videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Play className="h-4 w-4 mr-2" />
+                            Abrir no OneDrive
+                          </a>
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
               
               {/* Título/subtítulo/descrição abaixo do player */}
               <div className="mt-4 lg:mt-6">
